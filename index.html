@@ -11,16 +11,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             margin: 0;
         }
         h1 {
             color: #4CAF50;
             font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .globo {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Globe_icon_2.svg/1200px-Globe_icon_2.svg.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
     <h1>Olá, Mundo!</h1>
+    <div class="globo"></div>
 </body>
 </html>
