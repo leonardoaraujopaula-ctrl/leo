@@ -3,35 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olá Mundo</title>
+    <title>Planeta Terra</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
+            text-align: center;
             margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
         }
         h1 {
-            color: #4CAF50;
-            font-size: 50px;
-            margin-bottom: 20px;
+            color: #2e8b57;
+            margin-top: 20px;
         }
-        .globo {
-            width: 200px;
-            height: 200px;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Globe_icon_2.svg/1200px-Globe_icon_2.svg.png');
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%;
+        p {
+            font-size: 18px;
+            color: #333;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .image-container img {
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
-    <h1>Olá, Mundo!</h1>
-    <div class="globo"></div>
+    <h1>O Planeta Terra</h1>
+    <p>O planeta Terra é o único conhecido até agora que suporta vida, devido à sua atmosfera, água em estado líquido e temperatura amena. Ele faz parte do Sistema Solar e é o terceiro planeta mais próximo do Sol. Com uma diversidade incrível de ecossistemas, a Terra abriga uma enorme variedade de seres vivos e possui uma geografia fascinante, com oceanos, continentes e uma grande quantidade de recursos naturais.</p>
+
+    <div class="image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Earth_from_Space_-_May_2012.jpg" alt="Imagem do Planeta Terra">
+    </div>
 </body>
 </html>
