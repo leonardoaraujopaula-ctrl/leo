@@ -1,45 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planeta Terra</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f8ff;
-        }
-        h1 {
-            color: #2e8b57;
-            margin-top: 20px;
-        }
-        p {
-            font-size: 18px;
-            color: #333;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        .image-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .image-container img {
-            width: 60%;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-    </style>
-</head>
-<body>
-    <h1>O Planeta Terra</h1>
-    <p>O planeta Terra é o único conhecido até agora que suporta vida, devido à sua atmosfera, água em estado líquido e temperatura amena. Ele faz parte do Sistema Solar e é o terceiro planeta mais próximo do Sol. Com uma diversidade incrível de ecossistemas, a Terra abriga uma enorme variedade de seres vivos e possui uma geografia fascinante, com oceanos, continentes e uma grande quantidade de recursos naturais.</p>
+/* Resetando margens e preenchimentos padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <div class="image-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Earth_from_Space_-_May_2012.jpg" alt="Imagem do Planeta Terra">
-    </div>
-</body>
-</html>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1000px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.earth-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #555;
+}
