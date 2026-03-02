@@ -1,55 +1,45 @@
-/* Resetando margens e preenchimentos padrão */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planeta Terra</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #050505; /* Cor de fundo do espaço */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+        .container-terra {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
 
-.container {
-    text-align: center;
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 1000px;
-}
+        .terra {
+            width: 100%;
+            height: 100%;
+            /* Imagem do Planeta Terra */
+            background-image: url('https://upload.wikimedia.org');
+            background-size: cover;
+            border-radius: 50%; /* Faz a imagem ficar redonda */
+            box-shadow: 
+                inset -25px -25px 40px rgba(0,0,0,0.5)/* Sombra interna para dar volume */
+                0 0 20px rgba(70, 130, 180, 0.5); /* Brilho azulado externo */
+        }
+    </style>
+</head>
+<body>
 
-h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
+    <div class="container-terra">
+        <div class="terra"></div>
+    </div>
 
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.earth-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-}
-
-.description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-    color: #555;
-}
+</body>
+</html>
