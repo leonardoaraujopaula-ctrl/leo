@@ -1,45 +1,60 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planeta Terra</title>
+    <title>Olá Mundo - HTML + CSS</title>
+    
     <style>
-        body, html {
-            height: 100%;
+        body {
             margin: 0;
-            padding: 0;
-            background: linear-gradient(180deg, #1a1a1a, #4b4b4b); /* Gradiente para iluminar o fundo */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
         }
 
-        .container-terra {
-            width: 300px;
-            height: 300px;
-            position: relative;
+        .container {
+            text-align: center;
+            padding: 40px 60px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
-        .terra {
-            width: 100%;
-            height: 100%;
-            /* Imagem do Planeta Terra */
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/8f/Earth_Eastern_Hemisphere.jpg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 50%; /* Faz a imagem ficar redonda */
-            box-shadow: 
-                inset -25px -25px 40px rgba(0,0,0,0.5), /* Sombra interna para dar volume */
-                0 0 40px rgba(70, 130, 180, 0.6); /* Brilho azulado mais forte */
+        h1 {
+            font-size: 5.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, #ffffff, #e0c3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .subtitulo {
+            font-size: 1.6rem;
+            margin-top: 15px;
+            opacity: 0.9;
+        }
+
+        .ano {
+            font-size: 1.1rem;
+            margin-top: 30px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <div class="container-terra">
-        <div class="terra"></div>
+    <div class="container">
+        <h1>Olá Mundo!</h1>
+        <div class="subtitulo">Meu primeiro HTML com CSS bonito 🌈</div>
+        <div class="ano">2026</div>
     </div>
 
 </body>
