@@ -9,15 +9,25 @@
             height: 100vh;
             display: grid;
             place-items: center;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg') no-repeat center center;
-            background-size: cover;
+            background-color: #0f0f23;
             color: #00ff9f;
             font-family: monospace;
             font-size: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .earth {
+            position: absolute;
+            bottom: 0;
+            width: 50%;  /* Define a largura do globo */
+            height: auto; /* Mantém a proporção da imagem */
+            z-index: -1;  /* Coloca a imagem abaixo do texto */
         }
     </style>
 </head>
 <body>
     Olá Mundo!
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Planeta Terra" class="earth">
 </body>
 </html>
