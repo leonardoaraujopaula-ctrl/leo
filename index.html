@@ -17,6 +17,25 @@
             position: relative;
         }
 
+        /* Efeito no texto */
+        .text {
+            background: linear-gradient(45deg, #ff6ec7, #ff7eb3, #ff6a00); /* Gradiente de cor */
+            -webkit-background-clip: text;
+            color: transparent; /* Torna o texto transparente, o gradiente toma conta */
+            animation: pulse 1.5s infinite alternate; /* Animação de pulsar */
+            text-shadow: 0 0 15px rgba(0, 255, 159, 0.7), 0 0 30px rgba(0, 255, 159, 0.5); /* Sombra para brilhar */
+        }
+
+        /* Animação de pulso */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
         .earth {
             width: 30%;  /* Ajusta o tamanho do globo */
             height: auto;  /* Mantém a proporção */
@@ -25,7 +44,7 @@
     </style>
 </head>
 <body>
-    Olá Mundo!
+    <span class="text">Olá Mundo!</span>
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Planeta Terra" class="earth">
 </body>
 </html>
