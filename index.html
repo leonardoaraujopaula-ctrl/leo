@@ -2,49 +2,93 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Olá Mundo</title>
+    <title>Jogo de Tiro HTML/CSS</title>
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            display: grid;
-            place-items: center;
-            background-color: #0f0f23;
-            color: #00ff9f;
-            font-family: monospace;
-            font-size: 4rem;
-            text-align: center;
+            background: #222;
+            color: white;
+            font-family: sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Área do Jogo */
+        .cenario {
             position: relative;
+            width: 800px;
+            height: 400px;
+            background: #333;
+            border: 5px solid #555;
+            cursor: crosshair; /* Muda o mouse para uma mira */
+            overflow: hidden;
         }
 
-        /* Efeito no texto */
-        .text {
-            background: linear-gradient(45deg, #ff6ec7, #ff7eb3, #ff6a00); /* Gradiente de cor */
-            -webkit-background-clip: text;
-            color: transparent; /* Torna o texto transparente, o gradiente toma conta */
-            animation: pulse 1.5s infinite alternate; /* Animação de pulsar */
-            text-shadow: 0 0 15px rgba(0, 255, 159, 0.7), 0 0 30px rgba(0, 255, 159, 0.5); /* Sombra para brilhar */
+        /* Contador de Pontos (usando Counter do CSS) */
+        body { counter-reset: pontuacao; }
+        
+        input:checked { counter-increment: pontuacao; }
+        
+        .placar::after {
+            content: counter(pontuacao);
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        /* Animação de pulso */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(1.1);
-            }
+        /* Esconder os Checkboxes originais */
+        input[type="checkbox"] {
+            display: none;
         }
 
-        .earth {
-            width: 30%;  /* Ajusta o tamanho do globo */
-            height: auto;  /* Mantém a proporção */
-            margin-top: 20px; /* Adiciona um espaço entre o texto e o globo */
+        /* O Alvo (Label do Checkbox) */
+        .alvo {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, red 20%, white 21%, white 40%, red 41%, red 60%, white 61%);
+            border-radius: 50%;
+            display: block;
+            cursor: crosshair;
+            transition: transform 0.2s;
         }
+
+        /* Sumir com o alvo ao ser "atingido" */
+        input:checked + .alvo {
+            display: none;
+        }
+
+        /* Animações dos Alvos */
+        @keyframes mover {
+            0% { left: -50px; top: 50px; }
+            50% { top: 300px; }
+            100% { left: 850px; top: 50px; }
+        }
+
+        .alvo1 { animation: mover 4s linear infinite; }
+        .alvo2 { animation: mover 6s linear infinite reverse; }
+        .alvo3 { animation: mover 3s ease-in-out infinite; animation-delay: 1s; }
+
     </style>
 </head>
 <body>
-    <span class="text">Olá Mundo!</span>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Planeta Terra" class="earth">
+
+    <h1>Stand de Tiro CSS</h1>
+    <div class="placar">Alvos abatidos: </div>
+
+    <div class="cenario">
+        <input type="checkbox" id="a1">
+        <label for="a1" class="alvo alvo1"></label>
+
+        <input type="checkbox" id="a2">
+        <label for="a2" class="alvo alvo2"></label>
+
+        <input type="checkbox" id="a3">
+        <label for="a3" class="alvo alvo3"></label>
+    </div>
+
+    <p>Clique nos alvos para eliminá-los!</p>
+
 </body>
 </html>
