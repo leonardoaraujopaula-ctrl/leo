@@ -15,6 +15,19 @@
             align-items: center;
         }
 
+        h1 {
+            margin-top: 20px;
+        }
+
+        /* Contador de Pontos */
+        body { counter-reset: pontuacao; }
+
+        .placar::after {
+            content: counter(pontuacao);
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
         /* Área do Jogo */
         .cenario {
             position: relative;
@@ -22,19 +35,9 @@
             height: 400px;
             background: #333;
             border: 5px solid #555;
-            cursor: crosshair; /* Muda o mouse para uma mira */
+            cursor: crosshair;
             overflow: hidden;
-        }
-
-        /* Contador de Pontos (usando Counter do CSS) */
-        body { counter-reset: pontuacao; }
-        
-        input:checked { counter-increment: pontuacao; }
-        
-        .placar::after {
-            content: counter(pontuacao);
-            font-size: 24px;
-            font-weight: bold;
+            margin-top: 20px;
         }
 
         /* Esconder os Checkboxes originais */
@@ -42,7 +45,7 @@
             display: none;
         }
 
-        /* O Alvo (Label do Checkbox) */
+        /* Alvo */
         .alvo {
             position: absolute;
             width: 50px;
@@ -54,9 +57,20 @@
             transition: transform 0.2s;
         }
 
-        /* Sumir com o alvo ao ser "atingido" */
+        /* Hitbox maior para facilitar */
+        .alvo::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 80px;
+            height: 80px;
+        }
+
+        /* Sumir com o alvo ao ser atingido */
         input:checked + .alvo {
             display: none;
+            counter-increment: pontuacao; /* incrementa a pontuação */
         }
 
         /* Animações dos Alvos */
@@ -70,12 +84,16 @@
         .alvo2 { animation: mover 6s linear infinite reverse; }
         .alvo3 { animation: mover 3s ease-in-out infinite; animation-delay: 1s; }
 
+        p {
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
 
     <h1>Stand de Tiro CSS</h1>
-    <div class="placar">Alvos abatidos: </div>
+    <div class="placar">Alvos abatidos:</div>
 
     <div class="cenario">
         <input type="checkbox" id="a1">
