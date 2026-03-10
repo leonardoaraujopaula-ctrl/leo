@@ -30,21 +30,22 @@
 
         /* Mensagem de Level */
         .level-message {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: bold;
             color: yellow;
             text-align: center;
             opacity: 0;
             animation: levelMessage 2s forwards;
             position: absolute;
-            top: 50px;
-            animation-delay: 1s;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
         }
 
         @keyframes levelMessage {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(1); }
+            0% { opacity: 0; transform: translateY(-50%) scale(0.5); }
+            50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-50%) scale(1); }
         }
 
         /* Área do Jogo */
@@ -137,12 +138,11 @@
 
     <h1>Stand de Tiro CSS</h1>
     <div class="placar">Alvos abatidos:</div>
+
+    <!-- Mensagem de Level -->
     <div class="level-message">Level 1</div>
 
     <div class="cenario fase-1">
         <!-- Fase 1 -->
         <input type="checkbox" id="a1"><label for="a1" class="alvo alvo1"></label>
-        <input type="checkbox" id="a2"><label for="a2" class="alvo alvo2"></label>
-        <input type="checkbox" id="a3"><label for="a3" class="alvo alvo3"></label>
-        <input type="checkbox" id="a4"><label for="a4" class="alvo alvo4"></label>
-        <input type="checkbox" id="a5"><label for="a5" class="alvo
+       
