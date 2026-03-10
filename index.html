@@ -28,6 +28,25 @@
             margin-left: 10px;
         }
 
+        /* Mensagem de Level */
+        .level-message {
+            font-size: 36px;
+            font-weight: bold;
+            color: yellow;
+            text-align: center;
+            opacity: 0;
+            animation: levelMessage 2s forwards;
+            position: absolute;
+            top: 50px;
+            animation-delay: 1s;
+        }
+
+        @keyframes levelMessage {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
         /* Área do Jogo */
         .cenario {
             position: relative;
@@ -98,68 +117,37 @@
             100% { left: -50px; top: 100px; }
         }
 
-        /* Ajustando a velocidade e a distribuição dos alvos */
         .alvo1 { animation: mover1 3s linear infinite; }
         .alvo2 { animation: mover2 4s linear infinite reverse; }
         .alvo3 { animation: mover3 3.5s ease-in-out infinite; animation-delay: 1s; }
         .alvo4 { animation: mover4 5s ease-in-out infinite; animation-delay: 2s; }
 
-        .alvo5 { animation: mover1 3.5s linear infinite; }
-        .alvo6 { animation: mover2 4.5s linear infinite reverse; }
-        .alvo7 { animation: mover3 4s ease-in-out infinite; animation-delay: 2s; }
-        .alvo8 { animation: mover4 4s ease-in-out infinite; animation-delay: 3s; }
-
-        .alvo9 { animation: mover1 3.5s linear infinite; }
-        .alvo10 { animation: mover2 4s linear infinite reverse; }
-        .alvo11 { animation: mover3 4.5s ease-in-out infinite; animation-delay: 3s; }
-        .alvo12 { animation: mover4 5s ease-in-out infinite; animation-delay: 4s; }
-
-        .alvo13 { animation: mover1 3.8s linear infinite; }
-        .alvo14 { animation: mover2 4.2s linear infinite reverse; }
-        .alvo15 { animation: mover3 3.6s ease-in-out infinite; animation-delay: 4s; }
-        .alvo16 { animation: mover4 4.8s ease-in-out infinite; animation-delay: 5s; }
-
-        .alvo17 { animation: mover1 4.1s linear infinite; }
-        .alvo18 { animation: mover2 4.3s linear infinite reverse; }
-        .alvo19 { animation: mover3 4.2s ease-in-out infinite; animation-delay: 6s; }
-        .alvo20 { animation: mover4 4.5s ease-in-out infinite; animation-delay: 7s; }
-
-        p {
-            margin-top: 20px;
+        /* Ajustando os alvos para cada fase */
+        .fase-1 .alvo1, .fase-1 .alvo2, .fase-1 .alvo3, .fase-1 .alvo4, .fase-1 .alvo5 {
+            display: block;
         }
-
-    </style>
-</head>
-<body>
-
-    <h1>Stand de Tiro CSS</h1>
-    <div class="placar">Alvos abatidos:</div>
-
-    <div class="cenario">
-        <!-- Alvos -->
-        <input type="checkbox" id="a1"><label for="a1" class="alvo alvo1"></label>
-        <input type="checkbox" id="a2"><label for="a2" class="alvo alvo2"></label>
-        <input type="checkbox" id="a3"><label for="a3" class="alvo alvo3"></label>
-        <input type="checkbox" id="a4"><label for="a4" class="alvo alvo4"></label>
-        <input type="checkbox" id="a5"><label for="a5" class="alvo alvo5"></label>
-        <input type="checkbox" id="a6"><label for="a6" class="alvo alvo6"></label>
-        <input type="checkbox" id="a7"><label for="a7" class="alvo alvo7"></label>
-        <input type="checkbox" id="a8"><label for="a8" class="alvo alvo8"></label>
-        <input type="checkbox" id="a9"><label for="a9" class="alvo alvo9"></label>
-        <input type="checkbox" id="a10"><label for="a10" class="alvo alvo10"></label>
-        <input type="checkbox" id="a11"><label for="a11" class="alvo alvo11"></label>
-        <input type="checkbox" id="a12"><label for="a12" class="alvo alvo12"></label>
-        <input type="checkbox" id="a13"><label for="a13" class="alvo alvo13"></label>
-        <input type="checkbox" id="a14"><label for="a14" class="alvo alvo14"></label>
-        <input type="checkbox" id="a15"><label for="a15" class="alvo alvo15"></label>
-        <input type="checkbox" id="a16"><label for="a16" class="alvo alvo16"></label>
-        <input type="checkbox" id="a17"><label for="a17" class="alvo alvo17"></label>
-        <input type="checkbox" id="a18"><label for="a18" class="alvo alvo18"></label>
-        <input type="checkbox" id="a19"><label for="a19" class="alvo alvo19"></label>
-        <input type="checkbox" id="a20"><label for="a20" class="alvo alvo20"></label>
-    </div>
-
-    <p>Clique nos alvos para eliminá-los!</p>
-
-</body>
-</html>
+        .fase-2 .alvo1, .fase-2 .alvo2, .fase-2 .alvo3, .fase-2 .alvo4, .fase-2 .alvo5,
+        .fase-2 .alvo6, .fase-2 .alvo7, .fase-2 .alvo8, .fase-2 .alvo9, .fase-2 .alvo10 {
+            display: block;
+        }
+        .fase-3 .alvo1, .fase-3 .alvo2, .fase-3 .alvo3, .fase-3 .alvo4, .fase-3 .alvo5,
+        .fase-3 .alvo6, .fase-3 .alvo7, .fase-3 .alvo8, .fase-3 .alvo9, .fase-3 .alvo10,
+        .fase-3 .alvo11, .fase-3 .alvo12, .fase-3 .alvo13, .fase-3 .alvo14, .fase-3 .alvo15,
+        .fase-3 .alvo16, .fase-3 .alvo17, .fase-3 .alvo18, .fase-3 .alvo19, .fase-3 .alvo20 {
+            display: block;
+        }
+        .fase-4 .alvo1, .fase-4 .alvo2, .fase-4 .alvo3, .fase-4 .alvo4, .fase-4 .alvo5,
+        .fase-4 .alvo6, .fase-4 .alvo7, .fase-4 .alvo8, .fase-4 .alvo9, .fase-4 .alvo10,
+        .fase-4 .alvo11, .fase-4 .alvo12, .fase-4 .alvo13, .fase-4 .alvo14, .fase-4 .alvo15,
+        .fase-4 .alvo16, .fase-4 .alvo17, .fase-4 .alvo18, .fase-4 .alvo19, .fase-4 .alvo20,
+        .fase-4 .alvo21, .fase-4 .alvo22, .fase-4 .alvo23, .fase-4 .alvo24, .fase-4 .alvo25,
+        .fase-4 .alvo26, .fase-4 .alvo27, .fase-4 .alvo28, .fase-4 .alvo29, .fase-4 .alvo30 {
+            display: block;
+        }
+        .fase-5 .alvo1, .fase-5 .alvo2, .fase-5 .alvo3, .fase-5 .alvo4, .fase-5 .alvo5,
+        .fase-5 .alvo6, .fase-5 .alvo7, .fase-5 .alvo8, .fase-5 .alvo9, .fase-5 .alvo10,
+        .fase-5 .alvo11, .fase-5 .alvo12, .fase-5 .alvo13, .fase-5 .alvo14, .fase-5 .alvo15,
+        .fase-5 .alvo16, .fase-5 .alvo17, .fase-5 .alvo18, .fase-5 .alvo19, .fase-5 .alvo20,
+        .fase-5 .alvo21, .fase-5 .alvo22, .fase-5 .alvo23, .fase-5 .alvo24, .fase-5 .alvo25,
+        .fase-5 .alvo26, .fase-5 .alvo27, .fase-5 .alvo28, .fase-5 .alvo29, .fase-5 .alvo30,
+        .fase-5 .alvo31, .
