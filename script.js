@@ -1,162 +1,220 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-const scoreEl = document.getElementById("score");
-const levelEl = document.getElementById("level");
-const remainingEl = document.getElementById("remaining");
-const levelScreen = document.getElementById("levelScreen");
+const healthEl = document.getElementById("health");
+const playersEl = document.getElementById("players");
+const zoneEl = document.getElementById("zone");
+const gameOverEl = document.getElementById("game-over");
 
-let score = 0;
-let currentLevel = 1;
-let targets = [];
-let gameActive = false;
-let phaseScore = 0;
+let player = {
+    x: 500,
+    y: 350,
+    size: 13,
+    speed: 5.5,
+    health: 100,
+    angle: 0
+};
 
-class Target {
-  constructor() {
-    this.radius = Math.max(12, 48 - currentLevel * 6);        // Menor a cada fase
-    this.x = Math.random() * (canvas.width - this.radius * 2) + this.radius;
-    this.y = Math.random() * (canvas.height - this.radius * 2) + this.radius;
+let bullets = [];
+let bots = [];
+let particles = [];
+let safeRadius = 800;
+let timeUntilShrink = 8000;
+let gameRunning = true;
+
+const keys = {};
+
+// Criar bots
+for (let i = 0; i < 10; i++) {
+    bots.push({
+        x: Math.random() * 880 + 60,
+        y: Math.random() * 580 + 60,
+        size: 12,
+        speed: 2.9,
+        health: 85,
+        color: "#ff4444"
+    });
+}
+
+// ====================== CONTROLES ======================
+window.addEventListener("keydown", e => keys[e.key] = true);
+window.addEventListener("keyup", e => keys[e.key] = false);
+
+canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    player.angle = Math.atan2(my - player.y, mx - player.x);
+});
+
+canvas.addEventListener("click", () => {
+    if (!gameRunning) return;
     
-    // Tempo de vida (fica mais difícil)
-    this.life = Math.max(45, 95 - currentLevel * 9);
-    
-    // Movimento (a partir da fase 3)
-    this.speed = currentLevel >= 3 ? (currentLevel - 2) * 0.8 : 0;
-    this.dx = (Math.random() - 0.5) * this.speed;
-    this.dy = (Math.random() - 0.5) * this.speed;
-  }
+    bullets.push({
+        x: player.x,
+        y: player.y,
+        speed: 13,
+        angle: player.angle,
+        damage: 28
+    });
+});
 
-  update() {
-    if (this.speed > 0) {
-      this.x += this.dx;
-      this.y += this.dy;
+// ====================== UPDATE ======================
+function update() {
+    if (!gameRunning) return;
 
-      // Rebote nas bordas
-      if (this.x - this.radius < 0 || this.x + this.radius > canvas.width) this.dx *= -1;
-      if (this.y - this.radius < 0 || this.y + this.radius > canvas.height) this.dy *= -1;
+    // Movimento
+    if (keys['w'] || keys['W']) player.y -= player.speed;
+    if (keys['s'] || keys['S']) player.y += player.speed;
+    if (keys['a'] || keys['A']) player.x -= player.speed;
+    if (keys['d'] || keys['D']) player.x += player.speed;
+
+    player.x = Math.max(25, Math.min(975, player.x));
+    player.y = Math.max(25, Math.min(675, player.y));
+
+    // Balas
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        let b = bullets[i];
+        b.x += Math.cos(b.angle) * b.speed;
+        b.y += Math.sin(b.angle) * b.speed;
+
+        if (b.x < 0 || b.x > 1000 || b.y < 0 || b.y > 700) {
+            bullets.splice(i, 1);
+        }
     }
-    this.life--;
-  }
+
+    // Bots
+    bots.forEach(bot => {
+        if (bot.health <= 0) return;
+
+        const dx = player.x - bot.x;
+        const dy = player.y - bot.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist > 0) {
+            bot.x += (dx / dist) * bot.speed;
+            bot.y += (dy / dist) * bot.speed;
+        }
+
+        // Colisão bala x bot
+        for (let i = bullets.length - 1; i >= 0; i--) {
+            let b = bullets[i];
+            if (Math.hypot(b.x - bot.x, b.y - bot.y) < bot.size + 6) {
+                bot.health -= b.damage;
+                bullets.splice(i, 1);
+                createParticles(b.x, b.y, 10, "#ffaa00");
+            }
+        }
+    });
+
+    bots = bots.filter(bot => bot.health > 0);
+
+    // Zona
+    if (timeUntilShrink > 0) timeUntilShrink -= 16;
+    else if (safeRadius > 130) safeRadius -= 0.85;
+
+    // Dano fora da zona
+    const distFromCenter = Math.hypot(player.x - 500, player.y - 350);
+    if (distFromCenter > safeRadius) {
+        player.health -= 0.2;
+    }
+
+    // UI
+    healthEl.textContent = Math.max(0, Math.floor(player.health));
+    playersEl.textContent = bots.length + 1;
+    zoneEl.textContent = Math.floor(safeRadius);
+
+    // Game Over
+    if (player.health <= 0) {
+        gameRunning = false;
+        gameOverEl.style.display = "block";
+    }
+
+    // Vitória
+    if (bots.length === 0) {
+        alert("🎉 VOCÊ VENCEU A BATTLE ROYALE!");
+        location.reload();
+    }
 }
 
-function spawnTargets() {
-  const amount = 3 + currentLevel * 2;   // Muito mais alvos nas fases altas
-  targets = [];
-  for (let i = 0; i < amount; i++) {
-    targets.push(new Target());
-  }
+// ====================== PARTICLES ======================
+function createParticles(x, y, count, color) {
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            vx: Math.random() * 7 - 3.5,
+            vy: Math.random() * 7 - 3.5,
+            life: 28,
+            color: color
+        });
+    }
 }
 
+// ====================== DRAW ======================
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0a1f0a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  targets.forEach((target, index) => {
-    target.update();
+    ctx.fillStyle = "#1e3a1e";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const alpha = target.life / 90;
-
-    // Alvo
+    // Zona
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineWidth = 7;
     ctx.beginPath();
-    ctx.arc(target.x, target.y, target.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 60, 60, ${alpha})`;
-    ctx.fill();
+    ctx.arc(500, 350, safeRadius, 0, Math.PI * 2);
+    ctx.stroke();
 
-    // Círculo branco
+    // Bots
+    bots.forEach(bot => {
+        ctx.fillStyle = bot.color;
+        ctx.beginPath();
+        ctx.arc(bot.x, bot.y, bot.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    // Jogador
+    ctx.save();
+    ctx.translate(player.x, player.y);
+    ctx.rotate(player.angle);
+    ctx.fillStyle = "#00aaff";
     ctx.beginPath();
-    ctx.arc(target.x, target.y, target.radius * 0.65, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+    ctx.arc(0, 0, player.size, 0, Math.PI * 2);
     ctx.fill();
+    ctx.fillStyle = "#005588";
+    ctx.fillRect(10, -5, 22, 10);
+    ctx.restore();
 
-    // Centro
-    ctx.beginPath();
-    ctx.arc(target.x, target.y, target.radius * 0.25, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 0, 0, ${alpha})`;
-    ctx.fill();
+    // Balas
+    ctx.fillStyle = "#ffff00";
+    bullets.forEach(b => {
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+    });
 
-    if (target.life <= 0) {
-      targets.splice(index, 1);
+    // Partículas
+    for (let i = particles.length - 1; i >= 0; i--) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        p.vx *= 0.95;
+        p.vy *= 0.95;
+
+        ctx.globalAlpha = p.life / 28;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x - 2, p.y - 2, 5, 5);
+
+        if (p.life <= 0) particles.splice(i, 1);
     }
-  });
-
-  remainingEl.textContent = targets.length;
+    ctx.globalAlpha = 1;
 }
 
 function gameLoop() {
-  if (!gameActive) return;
-  draw();
-
-  if (targets.length === 0) {
-    endPhase();
-  }
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
 }
 
-function endPhase() {
-  gameActive = false;
-  document.getElementById("currentLevel").textContent = currentLevel;
-  document.getElementById("phasePoints").textContent = phaseScore;
-  document.getElementById("totalScore").textContent = score;
-  levelScreen.style.display = "block";
-}
-
-function nextPhase() {
-  levelScreen.style.display = "none";
-  currentLevel++;
-
-  if (currentLevel > 5) {
-    alert(`🏆 PARABÉNS! Você completou o jogo!\nPontuação Final: ${score}`);
-    currentLevel = 1;
-    score = 0;
-  }
-
-  levelEl.textContent = currentLevel;
-  phaseScore = 0;
-  startPhase();
-}
-
-function startPhase() {
-  phaseScore = 0;
-  spawnTargets();
-  gameActive = true;
-}
-
-// Clique para atirar
-canvas.addEventListener("click", (e) => {
-  if (!gameActive) return;
-
-  const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
-
-  for (let i = targets.length - 1; i >= 0; i--) {
-    const t = targets[i];
-    const distance = Math.hypot(t.x - mouseX, t.y - mouseY);
-
-    if (distance < t.radius) {
-      const points = Math.floor(t.radius) * 4; // mais pontos por acerto
-      score += points;
-      phaseScore += points;
-
-      scoreEl.textContent = score;
-      targets.splice(i, 1);
-
-      // Respawn de novo alvo
-      if (targets.length < 3 + currentLevel * 2) {
-        targets.push(new Target());
-      }
-      break;
-    }
-  }
-});
-
-function startNewGame() {
-  score = 0;
-  currentLevel = 1;
-  phaseScore = 0;
-  scoreEl.textContent = score;
-  levelEl.textContent = currentLevel;
-  levelScreen.style.display = "none";
-  startPhase();
-}
-
-// Loop do jogo
-setInterval(gameLoop, 16);
+gameLoop();
