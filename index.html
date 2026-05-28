@@ -1,31 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiro ao Alvo - 5 Fases</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Royale 2D</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <h1>🎯 TIRO AO ALVO</h1>
-  <canvas id="canvas" width="600" height="500"></canvas>
+    <canvas id="game" width="1000" height="700"></canvas>
 
-  <div class="hud">
-    <div>Fase: <span id="level">1</span> / 5</div>
-    <div>Pontuação: <span id="score">0</span></div>
-    <div>Alvos: <span id="remaining">0</span></div>
-  </div>
+    <div id="ui">
+        Vida: <span id="health">100</span><br>
+        Jogadores: <span id="players">11</span><br>
+        Zona: <span id="zone">800</span>
+    </div>
 
-  <button onclick="startNewGame()">Novo Jogo</button>
+    <div id="game-over">
+        GAME OVER<br>
+        <button onclick="location.reload()">Jogar Novamente</button>
+    </div>
 
-  <div id="levelScreen" class="level-screen">
-    <h2>Fase <span id="currentLevel">1</span> Concluída!</h2>
-    <p>Pontos nesta fase: <span id="phasePoints">0</span></p>
-    <p>Total: <span id="totalScore">0</span></p>
-    <button onclick="nextPhase()">Próxima Fase →</button>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
